@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Barcode Reader</string>
+    <string name="dailog_title">Result</string>
+    <string name="dailog_ok">OK</string>
+    <string name="dailog_close">CLOSE</string>
 </resources>

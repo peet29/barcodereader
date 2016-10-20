@@ -1,10 +1,12 @@
 package com.mahimahistudio.barcodereader;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
@@ -21,18 +23,17 @@ public class MainActivity extends AppCompatActivity {
     private DecoratedBarcodeView barcodeView;
     private BeepManager beepManager;
     private String lastText;
-
     private BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
-            if(result.getText() == null || result.getText().equals(lastText)) {
+            if (result.getText() == null || result.getText().equals(lastText)) {
                 // Prevent duplicate scans
                 return;
             }
 
             lastText = result.getText();
-            barcodeView.setStatusText(result.getText());
             beepManager.playBeepSoundAndVibrate();
+            DialogShow();
         }
 
         @Override
@@ -40,6 +41,22 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private void DialogShow() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(lastText)
+                .setTitle(R.string.dailog_title);
+        builder.setCancelable(false);
+
+        builder.setPositiveButton(R.string.dailog_ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                lastText = "";
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
