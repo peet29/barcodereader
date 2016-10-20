@@ -1,6 +1,10 @@
 package com.mahimahistudio.barcodereader;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
@@ -49,11 +53,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void checkPermission() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    1);
+        } else {
+            barcodeView.resume();
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
 
-        barcodeView.resume();
+        checkPermission();
     }
 
     @Override
