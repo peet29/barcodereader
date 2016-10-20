@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         barcodeView = (DecoratedBarcodeView) findViewById(R.id.barcode_scanner);
         barcodeView.decodeContinuous(callback);
-
         beepManager = new BeepManager(this);
+
+
     }
 
     @Override
