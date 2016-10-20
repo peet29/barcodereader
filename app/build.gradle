@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+def dbflow_version = "4.0.0-beta1"
 
 android {
     compileSdkVersion 24
@@ -27,4 +30,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.journeyapps:zxing-android-embedded:3.4.0'
     testCompile 'junit:junit:4.12'
+
+    apt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    // use kapt for kotlin apt
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
 }
