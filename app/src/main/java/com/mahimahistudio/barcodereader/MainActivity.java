@@ -1,4 +1,4 @@
-package com.example.greatcorner.barcodereader;
+package com.mahimahistudio.barcodereader;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package com.example.greatcorner.barcodereader;
+package com.mahimahistudio.barcodereader;
 
 import org.junit.Test;
 

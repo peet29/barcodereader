@@ -1,4 +1,4 @@
-package com.example.greatcorner.barcodereader;
+package com.mahimahistudio.barcodereader;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
