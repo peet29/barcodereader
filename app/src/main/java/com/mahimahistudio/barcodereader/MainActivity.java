@@ -1,8 +1,13 @@
 package com.mahimahistudio.barcodereader;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -47,9 +52,78 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle(R.string.dailog_title);
         builder.setCancelable(false);
 
-        builder.setPositiveButton(R.string.dailog_ok, new DialogInterface.OnClickListener() {
+
+        String positiveText = null;
+        switch (lastText.substring(0, 4).toUpperCase()) {
+            case "SMS:":
+            case "SMST":
+                positiveText = "send sms";
+                builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(lastText.toLowerCase()));
+                        startActivity(intent);
+
+                        lastText = "";
+                    }
+                });
+                break;
+            case "TEL:":
+                positiveText = "call";
+                builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(lastText.toLowerCase()));
+                        startActivity(intent);
+
+                        lastText = "";
+                    }
+                });
+
+                break;
+            case "MAIL":
+                positiveText = "send email";
+                builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(lastText.toLowerCase()));
+                        startActivity(intent);
+
+                        lastText = "";
+                    }
+                });
+                break;
+            case "HTTP":
+                positiveText = "open link";
+                builder.setPositiveButton(positiveText, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(lastText.toLowerCase()));
+                        if (intent.resolveActivity(getPackageManager()) != null) {
+                            startActivity(intent);
+                        }
+                        lastText = "";
+                    }
+                });
+                break;
+            case "BEGI":
+            case "GEO:":
+            case "MECA":
+            case "WIFI":
+                positiveText = "open";
+                break;
+
+        }
+        builder.setNegativeButton(R.string.dailog_close,new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
+                lastText = "";
+            }
+        });
+        builder.setNeutralButton("COPY",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("label",lastText);
+                clipboard.setPrimaryClip(clip);
                 lastText = "";
             }
         });
