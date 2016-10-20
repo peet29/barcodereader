@@ -26,6 +26,5 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.journeyapps:zxing-android-embedded:3.4.0'
-    compile 'com.google.android.gms:play-services:9.6.1'
     testCompile 'junit:junit:4.12'
 }
